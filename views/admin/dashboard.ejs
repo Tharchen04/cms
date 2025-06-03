@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMS Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --neon-blue: #00fff7;
+      --neon-pink: #ff00db;
+      --neon-cyan: #00e5ff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0d0f18, #121622);
+      color: #c0c7d9;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #121622dd;
+      border-radius: 20px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 40px var(--neon-blue), inset 0 0 80px #0008;
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+
+    h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+    }
+
+    .logout-btn {
+      background-color: var(--neon-pink);
+      color: #121622;
+      padding: 0.6rem 1.2rem;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 0 15px var(--neon-pink);
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #ff33cc;
+      box-shadow: 0 0 30px #ff33cc;
+    }
+
+    .form-container, table {
+      background: #121622dd;
+      border-radius: 20px;
+      box-shadow: 0 0 40px var(--neon-blue), inset 0 0 80px #0008;
+      backdrop-filter: saturate(180%) blur(20px);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-container h2 {
+      font-family: 'Orbitron', monospace;
+      color: var(--neon-pink);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 0.9rem;
+      margin: 0.5rem 0;
+      border: 1px solid var(--neon-cyan);
+      border-radius: 10px;
+      background-color: #0d0f18;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    button {
+      background: var(--neon-pink);
+      color: #121622;
+      padding: 0.8rem 2rem;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 0 15px var(--neon-pink);
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff33cc;
+      box-shadow: 0 0 30px #ff33cc;
+    }
+
+    h2 {
+      font-family: 'Orbitron', monospace;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+      font-size: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #fff;
+    }
+
+    table thead {
+      background: linear-gradient(to right, var(--neon-blue), var(--neon-cyan));
+    }
+
+    table th, table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #1a1e2c;
+    }
+
+    table tr:hover {
+      background-color: #252b3f;
+      transition: background-color 0.3s ease;
+    }
+
+    .actions a {
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 10px;
+      font-family: 'Orbitron', monospace;
+      color: var(--neon-cyan);
+      border: 1px solid var(--neon-cyan);
+      transition: all 0.3s;
+    }
+
+    .actions a:hover {
+      background-color: var(--neon-cyan);
+      color: #121622;
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .actions .delete {
+      color: var(--neon-pink);
+      border-color: var(--neon-pink);
+    }
+
+    .actions .delete:hover {
+      background-color: var(--neon-pink);
+      color: #121622;
+      box-shadow: 0 0 10px var(--neon-pink);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Admin Dashboard</h1>
+    <a class="logout-btn" href="/logout">Logout</a>
+  </header>
+
+  <div class="form-container">
+    <% if (contact) { %>
+      <h2>Edit Contact</h2>
+      <form action="/admin/edit-contact/<%= contact.id %>" method="POST">
+        <input type="text" name="name" value="<%= contact.name %>" placeholder="Full Name" required />
+        <input type="email" name="email" value="<%= contact.email %>" placeholder="Email" required />
+        <input type="text" name="phone" value="<%= contact.phone %>" placeholder="Phone" required />
+        <input type="text" name="address" value="<%= contact.address %>" placeholder="Address" />
+        <button type="submit">Update</button>
+      </form>
+    <% } else { %>
+      <h2>Add Contact</h2>
+      <form action="/admin/add-contact" method="POST">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="text" name="phone" placeholder="Phone" required />
+        <input type="text" name="address" placeholder="Address" />
+        <button type="submit">Add</button>
+      </form>
+    <% } %>
+  </div>
+
+  <h2>Contact List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (contacts.length > 0) { %>
+        <% contacts.forEach(c => { %>
+          <tr>
+            <td><%= c.name %></td>
+            <td><%= c.email %></td>
+            <td><%= c.phone %></td>
+            <td><%= c.address %></td>
+            <td class="actions">
+              <a href="/admin/edit-contact/<%= c.id %>">Edit</a>
+              <a class="delete" href="/admin/delete-contact/<%= c.id %>" onclick="return confirm('Delete this contact?');">Delete</a>
+            </td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr><td colspan="5">No contacts found.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+
+</body>
+</html>

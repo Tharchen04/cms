@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CMS Concept Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0d0f18, #121622);
+      color: #c0c7d9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+      --neon-blue: #00fff7;
+      --neon-pink: #ff00db;
+      --neon-cyan: #00e5ff;
+      --glow-color: var(--neon-blue);
+      padding: 1rem;
+    }
+
+    /* Navbar */
+    .navbar {
+      width: 100%;
+      max-width: 1200px;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #121622dd;
+      border-radius: 20px;
+      box-shadow:
+        0 0 40px var(--neon-blue),
+        inset 0 0 80px #0008;
+      backdrop-filter: saturate(180%) blur(20px);
+      user-select: none;
+      margin-bottom: 3rem;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      background: var(--neon-blue);
+      border-radius: 12px;
+      box-shadow:
+        0 0 15px var(--neon-blue),
+        inset 0 0 20px var(--neon-blue);
+      transition: transform 0.3s ease;
+    }
+    .logo-container:hover .logo {
+      transform: scale(1.1);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .nav-links a {
+      color: var(--neon-pink);
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 14px;
+      box-shadow:
+        0 0 15px var(--neon-pink);
+      user-select: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: box-shadow 0.3s ease, color 0.3s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: #ff33cc;
+      box-shadow:
+        0 0 30px #ff33cc,
+        0 0 15px #ff33cc;
+      outline: none;
+    }
+
+    /* Main Hero Section */
+    main.hero {
+      max-width: 1200px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      padding: 3rem 2rem;
+      background: #121622dd;
+      border-radius: 20px;
+      box-shadow:
+        0 0 40px var(--neon-blue),
+        inset 0 0 80px #0008;
+      backdrop-filter: saturate(180%) blur(20px);
+      user-select: text;
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 3.8rem;
+      color: var(--neon-cyan);
+      text-shadow:
+        0 0 20px var(--neon-cyan),
+        0 0 40px var(--neon-cyan);
+      margin-bottom: 0.5rem;
+      user-select: text;
+    }
+    .hero-content h2 {
+      font-family: 'Orbitron', monospace;
+      font-weight: 500;
+      font-size: 2.4rem;
+      color: var(--neon-pink);
+      letter-spacing: 0.12em;
+      text-shadow:
+        0 0 12px var(--neon-pink),
+        0 0 20px var(--neon-pink);
+      margin-bottom: 1.5rem;
+      user-select: text;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: #a0a9bb;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      user-select: text;
+    }
+
+    .learn-more {
+      display: inline-block;
+      padding: 0.9rem 2.5rem;
+      background: var(--neon-pink);
+      color: #121622;
+      text-decoration: none;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 1.15rem;
+      border-radius: 14px;
+      box-shadow:
+        0 0 15px var(--neon-pink);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .learn-more:hover,
+    .learn-more:focus {
+      background: #ff33cc;
+      box-shadow:
+        0 0 30px #ff33cc,
+        0 0 15px #ff33cc;
+      outline: none;
+    }
+
+    /* Hero Image */
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow:
+        0 0 30px var(--neon-blue),
+        0 0 50px var(--neon-cyan);
+      user-select: none;
+      object-fit: contain;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      main.hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-content {
+        margin: 0 auto 3rem auto;
+      }
+      .nav-links {
+        gap: 1rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="logo-container" tabindex="0" aria-label="CMS Concept Logo">
+      <div class="logo" role="img" aria-hidden="true"></div>
+      <span class="visually-hidden">CMS Concept</span>
+    </div>
+    <div class="nav-links">
+      <a href="/login">Log In</a>
+      <a href="/signup">Sign up</a>
+    </div>
+  </nav>
+
+  <main class="hero" role="main">
+    <div class="hero-content">
+      <h1>CMS CONCEPT</h1>
+      <h2>Landing Page</h2>
+      <p>
+        A Contact Management System (CMS) in a college setting is a specialized platform designed to streamline and enhance communication among students, faculty, staff, and other stakeholders.
+        By centralizing contact information and interaction histories, a CMS facilitates efficient information sharing, personalized communication, and improved administrative processes.
+      </p>
+ 
+    </div>
+    <div class="hero-image">
+      <img src="/images/1123.png" alt="Illustration representing CMS Concept" loading="lazy" />
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Futuristic Contact Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    /* Base and Fonts */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0d0f18, #121622);
+      color: #c0c7d9;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      --neon-blue: #00fff7;
+      --neon-purple: #bb00ff;
+      --neon-pink: #ff00db;
+      --neon-cyan: #00e5ff;
+      --glow-color: var(--neon-blue);
+    }
+
+    /* Background animated waves */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -30%;
+      left: -30%;
+      width: 160vw;
+      height: 160vh;
+      background:
+        radial-gradient(circle at 30% 30%, #00fff7aa 10%, transparent 40%),
+        radial-gradient(circle at 70% 70%, #bb00ffaa 15%, transparent 40%);
+      animation: floatWaves 20s ease-in-out infinite;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes floatWaves {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(20px,15px) scale(1.05); }
+    }
+
+    /* Scrollbar style */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #11141f;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--glow-color);
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--glow-color);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--neon-pink);
+      box-shadow: 0 0 15px var(--neon-pink);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      max-width: 1200px;
+      background: #121622cc;
+      padding: 1.25rem 2rem;
+      border-radius: 14px;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 2px solid transparent;
+      box-shadow:
+        0 0 12px var(--neon-blue),
+        inset 0 0 20px var(--neon-blue);
+      backdrop-filter: saturate(180%) blur(10px);
+      user-select: none;
+      z-index: 1000;
+      font-family: 'Orbitron', monospace;
+      color: var(--neon-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: border-color 0.3s ease;
+    }
+    header:hover {
+      border-color: var(--neon-pink);
+      box-shadow:
+        0 0 20px var(--neon-pink),
+        inset 0 0 30px var(--neon-pink);
+      color: var(--neon-pink);
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 500;
+      font-size: 1.75rem;
+      user-select: text;
+    }
+
+    /* Logout button */
+    .logout-btn {
+      background: transparent;
+      border: 2px solid var(--neon-blue);
+      color: var(--neon-blue);
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      padding: 0.5rem 1.3rem;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+      text-decoration: none;
+      transition:
+        background-color 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease,
+        color 0.4s ease,
+        transform 0.2s ease;
+      box-shadow: 0 0 10px var(--neon-blue);
+    }
+    .logout-btn:hover, .logout-btn:focus {
+      background-color: var(--neon-pink);
+      border-color: var(--neon-pink);
+      color: #121622;
+      box-shadow:
+        0 0 30px var(--neon-pink),
+        0 0 15px var(--neon-pink);
+      transform: scale(1.1);
+      outline: none;
+    }
+    .logout-btn svg {
+      stroke: currentColor;
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.5;
+    }
+
+    /* Main container */
+    main.container {
+      width: 100%;
+      max-width: 1200px;
+      background: #121622dd;
+      border-radius: 20px;
+      padding: 2.5rem 3rem;
+      box-shadow:
+        0 0 40px var(--neon-blue),
+        inset 0 0 80px #0008;
+      backdrop-filter: blur(20px);
+      position: relative;
+      z-index: 10;
+      user-select: none;
+    }
+    main.container h2 {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: var(--neon-cyan);
+      text-align: center;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.12em;
+      text-shadow:
+        0 0 12px var(--neon-cyan),
+        0 0 24px var(--neon-cyan);
+      user-select: text;
+    }
+
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 18px;
+      border-radius: 18px;
+      overflow: visible;
+      user-select: text;
+    }
+
+    thead tr {
+      color: var(--neon-pink);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      user-select: none;
+      user-drag: none;
+    }
+    thead th {
+      padding: 0.9rem 1.6rem;
+      text-align: left;
+      background: #1a1c2bcc;
+      border-radius: 14px;
+      box-shadow:
+        inset 0 0 8px var(--neon-pink),
+        0 0 6px var(--neon-pink);
+      transition: background-color 0.3s ease;
+    }
+    thead th:hover {
+      background: #ff00dbdd;
+      cursor: default;
+      box-shadow:
+        inset 0 0 15px var(--neon-pink),
+        0 0 14px var(--neon-pink);
+    }
+
+    tbody tr {
+      background: #0d0f1833;
+      border-radius: 18px;
+      box-shadow:
+        0 0 12px #00fff733,
+        inset 0 0 12px #00fff744;
+      transition:
+        box-shadow 0.4s ease,
+        transform 0.3s ease,
+        background-color 0.3s ease;
+      cursor: default;
+      user-select: text;
+      position: relative;
+    }
+    tbody tr:hover {
+      box-shadow:
+        0 0 24px var(--neon-pink),
+        inset 0 0 22px var(--neon-pink);
+      background-color: #290029bb;
+      transform: translateY(-6px);
+      z-index: 1;
+    }
+
+    tbody td {
+      padding: 1.3rem 1.6rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--neon-cyan);
+      position: relative;
+      vertical-align: middle;
+      letter-spacing: 0.02em;
+      user-select: text;
+    }
+    tbody td[data-label]::before {
+      content: attr(data-label);
+      display: none;
+      font-weight: 700;
+      color: var(--neon-pink);
+      position: absolute;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      user-select: none;
+      user-drag: none;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--neon-pink);
+      font-size: 1.5rem;
+      padding: 5rem 1rem;
+      text-shadow:
+        0 0 20px var(--neon-pink);
+      user-select: none;
+    }
+
+    /* Responsive: Mobile Cards */
+    @media (max-width: 900px) {
+      main.container {
+        padding: 1.8rem 1.8rem 2.5rem;
+      }
+      table, thead, tbody, tr, th, td {
+        display: block;
+        width: 100%;
+      }
+      thead tr {
+        display: none;
+      }
+      tbody tr {
+        margin-bottom: 1.8rem;
+        box-shadow:
+          0 0 25px var(--neon-cyan);
+        border-radius: 22px;
+        background: #121622cc;
+        padding: 1.5rem 1.8rem;
+        transform: none !important;
+        cursor: default;
+      }
+      tbody td {
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid var(--neon-pink);
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--neon-cyan);
+        text-align: left;
+        position: relative;
+        background: transparent;
+        border-radius: 0;
+      }
+      tbody td:last-child {
+        border-bottom: none;
+      }
+      tbody td[data-label]::before {
+        position: static;
+        transform: none;
+        margin-right: 0.8rem;
+        color: var(--neon-pink);
+        font-weight: 900;
+        font-size: 1rem;
+        user-select: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Contact Management System</h1>
+    <a href="/logout" class="logout-btn" role="button" tabindex="0" aria-label="Logout">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Logout
+    </a>
+  </header>
+
+  <main class="container">
+    <h2>Contact List</h2>
+
+    <% if (contacts.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% contacts.forEach(function(contact, i) { %>
+            <tr>
+              <td data-label="#"> <%= i + 1 %> </td>
+              <td data-label="Name"> <%= contact.name %> </td>
+              <td data-label="Email"> <%= contact.email %> </td>
+              <td data-label="Phone"> <%= contact.phone %> </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <div class="empty-state">No contacts found</div>
+    <% } %>
+  </main>
+</body>
+</html>
