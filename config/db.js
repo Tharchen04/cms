@@ -6,7 +6,11 @@ const db = pgp({
   port: 5432,
   database: 'cms_db',       // your DB name created in pgAdmin
   user: 'postgres',      // usually 'postgres'
-  password: '123'
+  password: '123',
+    ssl : {
+    rejectUnauthorized : false
+
+  }
 });
 
 module.exports = db;
