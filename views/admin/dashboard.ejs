@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CMS Admin Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --neon-blue: #00fff7;
@@ -59,7 +59,7 @@
       box-shadow: 0 0 30px #ff33cc;
     }
 
-    .form-container, table {
+    .form-container, .table-wrapper {
       background: #121622dd;
       border-radius: 20px;
       box-shadow: 0 0 40px var(--neon-blue), inset 0 0 80px #0008;
@@ -120,10 +120,16 @@
       font-size: 2rem;
     }
 
+    .table-wrapper {
+      overflow-x: auto;
+      padding: 1rem 2rem; /* reduce padding horizontally for scroll */
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       color: #fff;
+      table-layout: fixed;
     }
 
     table thead {
@@ -134,6 +140,9 @@
       padding: 1rem;
       text-align: left;
       border-bottom: 1px solid #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     table tr:nth-child(even) {
@@ -154,6 +163,8 @@
       color: var(--neon-cyan);
       border: 1px solid var(--neon-cyan);
       transition: all 0.3s;
+      white-space: nowrap;
+      display: inline-block;
     }
 
     .actions a:hover {
@@ -171,6 +182,53 @@
       background-color: var(--neon-pink);
       color: #121622;
       box-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    @media (max-width: 600px) {
+      table thead {
+        display: none;
+      }
+
+      table, tbody, tr, td {
+        display: block;
+        width: 100%;
+      }
+
+      tr {
+        margin-bottom: 1rem;
+        background-color: #1a1e2c;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 0 15px #0004;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #333;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--neon-cyan);
+        font-family: 'Orbitron', monospace;
+        font-size: 0.9rem;
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      .actions {
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
@@ -203,36 +261,38 @@
     <% } %>
   </div>
 
-  <h2>Contact List</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (contacts.length > 0) { %>
-        <% contacts.forEach(c => { %>
-          <tr>
-            <td><%= c.name %></td>
-            <td><%= c.email %></td>
-            <td><%= c.phone %></td>
-            <td><%= c.address %></td>
-            <td class="actions">
-              <a href="/admin/edit-contact/<%= c.id %>">Edit</a>
-              <a class="delete" href="/admin/delete-contact/<%= c.id %>" onclick="return confirm('Delete this contact?');">Delete</a>
-            </td>
-          </tr>
-        <% }); %>
-      <% } else { %>
-        <tr><td colspan="5">No contacts found.</td></tr>
-      <% } %>
-    </tbody>
-  </table>
+  <div class="form-container table-wrapper">
+    <h2>Contact List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (contacts.length > 0) { %>
+          <% contacts.forEach(c => { %>
+            <tr>
+              <td data-label="Name"><%= c.name %></td>
+              <td data-label="Email"><%= c.email %></td>
+              <td data-label="Phone"><%= c.phone %></td>
+              <td data-label="Address"><%= c.address %></td>
+              <td data-label="Actions" class="actions">
+                <a href="/admin/edit-contact/<%= c.id %>">Edit</a>
+                <a class="delete" href="/admin/delete-contact/<%= c.id %>" onclick="return confirm('Delete this contact?');">Delete</a>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="5">No contacts found.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
 
 </body>
 </html>
