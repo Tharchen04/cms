@@ -104,10 +104,10 @@ exports.postSignup = async (req, res) => {
       [name, email, hashedPassword, role || 'user', verificationToken]
     );
 
-    const verificationLink = `http://localhost:${process.env.PORT}/verify-email?token=${verificationToken}`;
+    const verificationLink = `${process.env.BASE_URL}/verify-email?token=${verificationToken}`;
 
     await transporter.sendMail({
-      from: `"Sherubtse Auth" <${process.env.EMAIL_USER}>`,
+      from: `"CMS" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'Verify your email',
       html: `<h3>Hello ${name},</h3><p>Please verify your email by clicking the link below:</p><a href="${verificationLink}">Verify Email</a>`,
